@@ -37,6 +37,10 @@ describe("To play a bowling game we need", function() {
 			expect(pin).toBeDefined()
 		})
 
+		it("a pin won't be knocked down when initialized", function() {
+			expect(pin.isKnocked).toBeDefined()
+		})
+
 		it("should have a player", function() {
 			expect(player).toBeDefined()
 		})
@@ -48,6 +52,10 @@ describe("To play a bowling game we need", function() {
 
 		it ("should have frames", function() {
 			expect(frame).toBeDefined()
+		})
+
+		it ("all pins should be standing at the begining of each frame", function() {
+			expect(frame.pinsDown).toEqual(0)
 		})
 
 		it("initial number of rolls per frame is should be two", function() {
@@ -69,19 +77,42 @@ describe("To play a bowling game we need", function() {
 
 	})
 
-	describe("the rules of the bowling game", function() {
+	describe("the rules of the bowling game:", function() {
 
-		it("should start at the initial frame", function() {
+		var game, 
+		pin, 
+		player, 
+		frame;
+
+		beforeEach(function() {
 			game = new Game
+			pin = new Pin
+			onlyPlayer = new Player
+			frame = new Frame
+		})
+
+		it("it should start at the initial frame", function() {
 			expect(game.currentFrame).toEqual(game.frames[0])
 		})
 
 		it("the game should know the number of the current frame", function() { 
-			game = new Game
-			frame = new Frame
 			expect(game.isFrameNumber()).toEqual(1)
 		})
 
+		it("a pin can be knocked down", function() {
+			pin.down()
+			expect(pin.isKnocked).toEqual(true)
+		})
+
+		it("when we rollTheBall a randow number of pins will be down", function() {
+			expect()
+		})
+
+		it("when we knock down pins the current frame should be updated", function() {
+			game.rollTheBall(5)
+			expect(game.currentFrame.pinsDown).toEqual(5)
+			
+		})
 
 
 
