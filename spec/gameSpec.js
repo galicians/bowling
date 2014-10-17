@@ -51,7 +51,7 @@ describe("To play a bowling game we need", function() {
 		})
 
 		it("initial number of rolls per frame is should be two", function() {
-			expect(frame.roll).toEqual(2)
+			expect(frame.rolls).toEqual(2)
 		})
 
 		it("the number of frames per game by default is 10", function() {
@@ -71,11 +71,18 @@ describe("To play a bowling game we need", function() {
 
 	describe("the rules of the bowling game", function() {
 
-		it("after a roll you should be able to knock down pins", function() { 
-			// Game.player.rollsBall
-
-			// expect(player.rollsBall).
+		it("should start at the initial frame", function() {
+			game = new Game
+			expect(game.currentFrame).toEqual(game.frames[0])
 		})
+
+		it("the game should know the number of the current frame", function() { 
+			game = new Game
+			frame = new Frame
+			expect(game.isFrameNumber()).toEqual(1)
+		})
+
+
 
 
 	})
