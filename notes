@@ -1,0 +1,228 @@
+name = "hello"; // This is a global variable!
+var name = "hello"; // That's better – an instance variable.
+var name; // This creates a variable, like setting something to nil in Ruby.
+In Javascript, you have to specify a return:
+Game.prototype.winner = function() {
+    return player1
+}
+'abc'.toUpperCase    // raises an error
+'abc'.toUpperCase()  // that's better!
+JS uses === for comparisons.
+Here we're defining Player and Game classes.
+
+function Player() {
+    // code goes here
+}
+
+function Game() {
+    // code goes here
+}
+function Player(name) {
+    this.name = name;
+    // Here we're passing in name as an argument and
+    // initialising a player with a name.
+}
+############################  MATCHERS  ###################################
+
+expect(x).toEqual(y); compares objects or primitives x and y and passes if they are equivalent
+
+expect(x).toBe(y); compares objects or primitives x and y and passes if they are the same object
+
+expect(x).toMatch(pattern); compares x to string or regular expression pattern and passes if they match
+
+expect(x).toBeDefined(); passes if x is not undefined
+
+expect(x).toBeUndefined(); passes if x is undefined
+
+expect(x).toBeNull(); passes if x is null
+
+expect(x).toBeTruthy(); passes if x evaluates to true
+
+expect(x).toBeFalsy(); passes if x evaluates to false
+
+expect(x).toContain(y); passes if array or string x contains y
+
+expect(x).toBeLessThan(y); passes if x is less than y
+
+expect(x).toBeGreaterThan(y); passes if x is greater than y
+
+expect(function(){fn();}).toThrow(e); passes if function fn throws exception e when executed
+
+Every matcher's criteria can be inverted by prepending .not:
+
+expect(x).not.toEqual(y); compares objects or primitives x and y and passes if they are not equivalent
+
+
+https://github.com/pivotal/jasmine/wiki/Matchers
+
+
+###############################  TESTS  ####################################
+
+5 Steps of good protocol Javascript testing with Jasmine
+
+STEP 1
+describe({
+    // create the closing brackets to create the description
+});  
+STEP 2
+describe('', function (){
+    // add the quotation marks, comma, function and parenthesis
+});
+STEP 3
+describe('', function (){
+
+    it({
+        // create the closing brackets to create the test
+    });
+
+});  
+STEP 4
+describe('', function (){
+
+    it('', function(){
+        // add the quitation marks, comma, function and parenthesis for the test
+    });
+
+});
+STEP 5
+describe('', function (){
+
+    it('', function(){
+        expect(class.test).to(outcome); // add your expectations and outcome for the test. 
+    });
+
+}); 
+
+
+##########################  JAVASCRIPT SYNTAX  ##############################
+
+
+JavaScript Functions are Objects
+In JavaScript, functions are objects.
+
+JavaScript functions have properties and methods.
+
+You can add your own properties and methods to functions.
+
+
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/A_re-introduction_to_JavaScript
+
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Introduction_to_Object-Oriented_JavaScript
+
+http://eloquentjavascript.net/1st_edition/contents.html
+
+
+
+##########################   NODE   ################################
+
+
+
+Node:
+
+installing node from github: https://gist.github.com/isaacs/579814
+
+first app with node: http://www.stoimen.com/blog/2010/11/19/diving-into-node-js-very-first-app/
+
+http://stackoverflow.com/questions/2353818/how-do-i-get-started-with-node-js?rq=1
+
+http://www.amazon.com/Practical-Node-js-Building-Real-World-Scalable-ebook/dp/B00IGKE2FK/ref=sr_1_2?ie=UTF8&qid=1412936539&sr=8-2&keywords=node
+
+http://www.amazon.com/JavaScript-JQuery-Interactive-Front-End-Development/dp/1118531647/ref=sr_1_1?ie=UTF8&qid=1412936260&sr=8-1&keywords=jquery
+
+
+more node:
+
+understading node: http://debuggable.com/posts/understanding-node-js:4bd98440-45e4-4a9a-8ef7-0f7ecbdd56cb
+
+diving into node introduction and installation: http://www.stoimen.com/blog/2010/11/16/diving-into-node-js-introduction-and-installation/
+
+diving into node the very first app: http://www.stoimen.com/blog/2010/11/19/diving-into-node-js-very-first-app/
+
+
+notes on javascript:
+
+https://github.com/henryaj/makers-notes/blob/master/javascript.md
+
+jasmine:
+
+http://jasmine.github.io/2.0/introduction.html
+
+installation --> https://github.com/pivotal/jasmine
+
+documentation & quick start --> http://jasmine.github.io/2.0/introduction.html
+
+how do i jasmine --> http://evanhahn.com/how-do-i-jasmine/
+
+describe --> is what we call a suite
+
+it() function --> the spec
+
+the check is called a matcher
+
+For each suite, you can have a bajillion specs for the bajillion tests you want to do.
+
+
+############################  GIT BRANCHING: ########################
+
+http://longair.net/blog/2009/04/16/git-fetch-and-merge/
+
+https://www.atlassian.com/git/tutorials/using-branches/git-merge
+
+
+https://github.com/Kunena/Kunena-Forum/wiki/Create-a-new-branch-with-git-and-manage-branches
+
+you can see your branch --> git branch
+
+git branch development
+git checkout development
+
+
+To create a branch and switch to it at the same time, you can run the git checkout command with the -b switch: git checkout -b development
+
+now:
+ git branch board
+ git checkout board
+ and you commit
+ your branch board has moved forward and has code development doesn't have
+
+ switch back to your master branch.
+
+ if your working directory or staging area has uncommitted changes that conflict with the branch you’re checking out, Git won’t let you switch branches. It’s best to have a clean working state when you switch branches.
+
+
+ To merge it back into your master branch to deploy to production:
+
+ git merge board
+
+ you’ll delete the hotfix branch, because you no longer need it:
+
+ git branch -d board
+
+
+
+
+git history
+
+git pull is feching and merging at the same time
+
+
+
+Doubts im working on development i add, commit and then i merge with test,
+it says already updatodate
+
+commit your changes or stage them before you can switch branches
+
+
+
+
+web generator: http://yeoman.io/
+
+
+
+
+
+
+
+
+
+
