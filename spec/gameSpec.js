@@ -59,7 +59,7 @@ describe("To play a bowling game we need", function() {
 		})
 
 		it("initial number of rolls per frame is should be two", function() {
-			expect(frame.rolls).toEqual(2)
+			expect(frame.remainingRolls).toEqual(2)
 		})
 
 		it("the number of frames per game by default is 10", function() {
@@ -96,7 +96,7 @@ describe("To play a bowling game we need", function() {
 		})
 
 		it("the game should know the number of the current frame", function() { 
-			expect(game.isFrameNumber()).toEqual(1)
+			expect(game.frameNumber()).toEqual(1)
 		})
 
 		it("a pin can be knocked down", function() {
@@ -104,16 +104,21 @@ describe("To play a bowling game we need", function() {
 			expect(pin.isKnocked).toEqual(true)
 		})
 
-		it("when we rollTheBall a randow number of pins will be down", function() {
-			expect()
+		it("when we knock down pins the current frame knows number of pins have been knocked over", function() {
+			game.rollTheBall(4)
+			expect(game.currentFrame.numberPinsKnockOver()).toEqual(4)
 		})
 
-		it("when we knock down pins the current frame should be updated", function() {
-			game.rollTheBall(5)
-			expect(game.currentFrame.pinsDown).toEqual(5)
-			
+		it("when we knock down pins the current frame knows number of remaining pins", function() {
+			game.rollTheBall(4)
+			expect(game.currentFrame.numberRemainingPins()).toEqual(6)
 		})
 
+		it("should keep the count of remaining rolls in the frame", function() {
+			expect(game.currentFrame.remainingRolls).toEqual(2)
+			game.rollTheBall(8)
+			expect(game.currentFrame.remainingRolls).toEqual(1)
+		})
 
 
 	})
