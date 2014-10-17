@@ -31,10 +31,22 @@ describe("game", function() {
 			expect(player).toBeDefined()
 		})
 
-		it("the number of frames per game by default is 10", function() {
-			
+		it ("should have frames", function() {
+			frame = new Frame
+			expect(frame).toBeDefined()
 		})
 
+		it("the number of frames per game by default is 10", function() {
+			var game = new Game
+			expect(game.frames.length).toEqual(10)
+		})
+
+		it("the number of inital pins at the begining of a frame is 10", function() {
+			var frame = new Frame
+			expect(frame.pins.length).toEqual(10)	
+		})
+
+		
 
 	})
 })
