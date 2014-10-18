@@ -1,20 +1,18 @@
-// player
-// 	scores
-// 	pins
-// 	strikes vs spares
-// 	10 frames --> 10 pins
-// 	same frame
-// 	1 roll  --> strike 
-// 	2rolls: 2.1 --> spares 2.2.a --> spares 2.2.b --> strike
-// 	score  = down pins + strike bonus previous round
+
+//pending:
 // 	gutter game(0) vs perfect game(300 pints)
 // 	30 points as max / frame
+//exception pinsDown > 10
+//player name
+//10th frame
+//change the strike and spare to the frame
 
-describe("To play a bowling game we need", function() {
+
+describe("To play a bowling game we need:", function() {
 	
 
 
-	describe("set up the playing area", function() {
+	describe("To set up the playing area", function() {
 
 		var game, 
 			pin, 
@@ -29,7 +27,7 @@ describe("To play a bowling game we need", function() {
 			})
 
 
-		it("should be defined", function() {
+		it("game should be defined", function() {
 			expect(game).toBeDefined()
 		})
 
@@ -77,7 +75,7 @@ describe("To play a bowling game we need", function() {
 
 	})
 
-	describe("the rules of the bowling game:", function() {
+	describe("the rules: ", function() {
 
 		var game, 
 		pin, 
@@ -120,11 +118,10 @@ describe("To play a bowling game we need", function() {
 			expect(game.currentFrame.numberRemainingPins()).toEqual(1)
 		})
 
-
 		it("should keep the count of remaining rolls in the frame", function() {
 			expect(game.currentFrame.remainingRolls).toEqual(2)
-			game.rollTheBall(8)
-			// expect(game.currentFrame.remainingRolls).toEqual(1)
+			game.rollTheBall(7)
+			expect(game.currentFrame.remainingRolls).toEqual(1)
 		})
 
 		it("should update the score of the player after each roll", function() {
@@ -150,6 +147,18 @@ describe("To play a bowling game we need", function() {
 			game.rollTheBall(7)
 			game.rollTheBall(3)
 			expect(game.isSpare()).toBeTruthy()
+		})
+
+		it("should be able to detect a strike", function() {
+			expect(game.isStrike(10)).toBeTruthy()
+		})
+
+		it("should assign a double bonues after a strike", function() {
+
+		})
+
+		it("should assign a bonus after a spare", function() {
+
 		})
 
 	})
