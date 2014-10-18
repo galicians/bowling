@@ -3,7 +3,7 @@ function Game() {
 	this.frames = []
 	this.fillFrames()
 	this.currentFrame = this.frames[initialFrame]
-	this.player
+	this.player = new Player
 }
 
 function Pin() {
@@ -12,6 +12,7 @@ function Pin() {
 
 function Player() {
 	this.score = 0
+	this.name
 }
 
 function Frame() {
@@ -30,15 +31,35 @@ Game.prototype.addPlayer = function(player) {
 }
 
 Game.prototype.frameNumber = function() {
-	var roundCero = 1
-	return this.frames.indexOf(this.currentFrame)  + roundCero
+	var roundOne = 1
+	return this.frames.indexOf(this.currentFrame)  + roundOne
 }
 
 Game.prototype.rollTheBall = function(pinsDown) {
+	// if (pinsDown > this.currentFrame.numberRemainingPins()) 
+		// throw "more pinsDown than remaining pins"
+	var firstPinStanding = this.currentFrame.numberPinsKnockOver()
 	for (var i = 0; i < pinsDown; i++ ) {
-		this.currentFrame.pins[i].down()
+		this.currentFrame.pins[firstPinStanding + i].down()
 	}
+	
 	this.currentFrame.newRoll()
+	this.updatingPlayerScore(pinsDown)
+}
+
+Game.prototype.strike = function() {
+	this.currentFrame = this.frames[initialFrame += 1]
+}
+Game.prototype.isSpare = function() {
+	return (this.currentFrame.remainingRolls === 0 && this.currentFrame.numberRemainingPins() === 0)
+}
+
+Game.prototype.changeFrame = function() {
+	this.currentFrame = this.frames[initialFrame += 1]
+}
+
+Game.prototype.updatingPlayerScore = function(pinsDown) {
+	this.player.score += pinsDown
 }
 
 Frame.prototype.placingPins = function() {
@@ -51,13 +72,12 @@ Frame.prototype.newRoll = function() {
 
 Frame.prototype.numberPinsKnockOver = function() {
 	var pinsDown = this.pins.filter( function(x) { return x.isKnocked } )
-		return pinsDown.length
+	return pinsDown.length
 }
 
 Frame.prototype.numberRemainingPins = function() {
 	return this.pins.length - this.numberPinsKnockOver()
 }
-
 
 Pin.prototype.down = function() {
 	this.isKnocked = true

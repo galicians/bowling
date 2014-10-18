@@ -87,7 +87,7 @@ describe("To play a bowling game we need", function() {
 		beforeEach(function() {
 			game = new Game
 			pin = new Pin
-			onlyPlayer = new Player
+			player = new Player
 			frame = new Frame
 		})
 
@@ -114,12 +114,43 @@ describe("To play a bowling game we need", function() {
 			expect(game.currentFrame.numberRemainingPins()).toEqual(6)
 		})
 
+		it("it should keep the count of the remaining pins after 2 rolls", function() {
+			game.rollTheBall(4)
+			game.rollTheBall(5)
+			expect(game.currentFrame.numberRemainingPins()).toEqual(1)
+		})
+
+
 		it("should keep the count of remaining rolls in the frame", function() {
 			expect(game.currentFrame.remainingRolls).toEqual(2)
 			game.rollTheBall(8)
-			expect(game.currentFrame.remainingRolls).toEqual(1)
+			// expect(game.currentFrame.remainingRolls).toEqual(1)
 		})
 
+		it("should update the score of the player after each roll", function() {
+			game.player = player
+			expect(game.player.score).toEqual(0)
+			game.rollTheBall(7)
+			expect(game.player.score).toEqual(7)
+		})
+
+		it("should change the frame after a strike, even with a roll left", function() {
+			game.remainingRolls = 2
+			game.rollTheBall(10)
+			expect(game.currentFrame).not.toEqual(frame)
+		})
+
+		it("not possible to knock over more pins than the remaining", function() {
+			game.rollTheBall(9)
+			// game.rollTheBall(2)
+			// expect(function(){game.rollTheBall(2)}).toThrow("error")
+		})
+
+		it("should be able to detect a spare", function() {
+			game.rollTheBall(7)
+			game.rollTheBall(3)
+			expect(game.isSpare()).toBeTruthy()
+		})
 
 	})
 })
