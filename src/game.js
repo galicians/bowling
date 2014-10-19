@@ -44,14 +44,15 @@ Game.prototype.rollTheBall = function(pinsDown) {
 		this.currentFrame.pins[firstPinStanding + i].down()
 	}
 	
-
+	this.currentFrame.newRoll()
+	this.assignBonus(pinsDown)
 	this.updatingPlayerScore(pinsDown)
 	// if (game.strike) return game.changeFrame()
-	this.currentFrame.newRoll()
+	// this.currentFrame.newRoll()
 }
 
-Game.prototype.isStrike = function(pinsDown) {
-	 return (pinsDown === 10 && this.currentFrame.remainingRolls === 2)
+Game.prototype.isStrike = function() {
+	 return (this.currentFrame.remainingRolls === 1 && this.currentFrame.numberRemainingPins() === 0)
 }
 
 Game.prototype.strike = function() {
@@ -72,10 +73,10 @@ Game.prototype.updatingPlayerScore = function(pinsDown) {
 	// if( pinsDown === 10)
 }
 
-Game.prototype.bonus = function(pinsDown) {
-	if( this.isStrike() ) return bonus.push(2,2)
-	if( this.isSpare() ) return bonus.push(2)
-	return bonus.push(1)
+Game.prototype.assignBonus = function(pinsDown) {
+	if( this.isStrike() ) return this.bonus.push(2,2)
+	if( this.isSpare() ) return this.bonus.push(2)
+	if( this.currentFrame.remainingRolls === 0 ) this.bonus.push(1)
 }
 
 Frame.prototype.placingPins = function() {
@@ -83,7 +84,11 @@ Frame.prototype.placingPins = function() {
 }
 
 Frame.prototype.newRoll = function() {
+	console.log("before")
+	console.log(this.remainingRolls)
 	this.remainingRolls -= 1
+	console.log("after")
+	console.log(this.remainingRolls)
 }
 
 Frame.prototype.numberPinsKnockOver = function() {

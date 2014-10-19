@@ -150,15 +150,26 @@ describe("To play a bowling game we need:", function() {
 		})
 
 		it("should be able to detect a strike", function() {
-			expect(game.isStrike(10)).toBeTruthy()
+			game.rollTheBall(10)
+			expect(game.isStrike()).toBeTruthy()
 		})
 
-		it("should assign a double bonues after a strike", function() {
+		it("should not assign a bonus if there are pins left at the end of the frame", function() {
+			game.rollTheBall(5)
+			game.rollTheBall(3)
+			expect(game.bonus).toEqual([1,1])
+		})
 
+		it("should assign a double bonus after a strike", function() {
+			game.rollTheBall(10)
+			expect(game.bonus).toEqual([1,2,2])
 		})
 
 		it("should assign a bonus after a spare", function() {
-
+			game.rollTheBall(5)
+			expect(game.bonus).toEqual([1])
+			game.rollTheBall(5)
+			expect(game.bonus).toEqual([1,2])
 		})
 
 	})
