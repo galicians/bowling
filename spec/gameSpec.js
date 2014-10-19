@@ -1,9 +1,4 @@
 
-// 	gutter game(0) vs perfect game(300 pints)
-//exception pinsDown > 10
-//10th frame
-
-
 describe("To play a bowling game we need:", function() {
 	
 
@@ -90,6 +85,23 @@ describe("To play a bowling game we need:", function() {
 			frame = new Frame
 		})
 
+		function strikeAndChangeFrame(times) {
+			for( var i = 0; i < times; i++) {
+			game.rollTheBall(10)
+			game.changeFrame() }
+		}
+
+		function moveToFrameTen() {
+			for( var i = 0; i < 9; i++) {
+				game.changeFrame() }
+		}
+
+		function spareAndChangeFrame() {
+			game.rollTheBall(5)
+			game.rollTheBall(5)
+			game.changeFrame()
+		}
+
 		it("it should start at the initial frame", function() {
 			expect(game.currentFrame).toEqual(game.frames[0])
 		})
@@ -131,12 +143,6 @@ describe("To play a bowling game we need:", function() {
 			expect(game.currentFrame).not.toEqual(frame)
 		})
 
-		it("not possible to knock over more pins than the remaining", function() {
-			game.rollTheBall(9)
-			// game.rollTheBall(2)
-			// expect(function(){game.rollTheBall(2)}).toThrow("error")
-		})
-
 		it("should be able to detect a spare", function() {
 			game.rollTheBall(7)
 			game.rollTheBall(3)
@@ -173,24 +179,38 @@ describe("To play a bowling game we need:", function() {
 
 		it("should double the points after a strike", function() {
 			game.player = player
-			game.rollTheBall(10)
-			expect(game.player.score).toEqual(10)
-			game.changeFrame()
+			strikeAndChangeFrame(1)
 			game.rollTheBall(5)
 			expect(game.player.score).toEqual(20)
 		})
 
 		it("should double the points after a spare", function() {
 			game.player = player
-			game.rollTheBall(5)
-			game.rollTheBall(5)
-			game.changeFrame()
+			spareAndChangeFrame()
 			game.rollTheBall(3)
 			expect(game.player.score).toEqual(16)
 		})
 
 		it("the maximun number of bonus in a frame is 3", function() {
+			strikeAndChangeFrame(5)
+			expect(game.player.score).toEqual(80)
+		})
 
+		it("knows when it is the 10th frame", function() {
+			moveToFrameTen()
+			expect(game.isFrameTen()).toBeTruthy()
+		})
+
+		it("knows when a Pefect Game took place", function() {
+			moveToFrameTen()
+			game.player.score = 300
+			expect(game.isPerfectGame()).toBeTruthy()
+		})
+
+		it("knows when a Cutter Game took plae", function() {
+			moveToFrameTen()
+			game.player.score = 0
+			expect(game.isCutterGame()).toBeTruthy()
 		})
 
 	})

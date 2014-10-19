@@ -5,6 +5,7 @@ function Game() {
 	this.initialFrame()
 	this.player = new Player
 	this.bonus = [1]
+	this.consecutiveStrikes = 0
 }
 
 function Pin() {
@@ -37,19 +38,14 @@ Game.prototype.frameNumber = function() {
 }
 
 Game.prototype.rollTheBall = function(pinsDown) {
-	// if (pinsDown > this.currentFrame.numberRemainingPins()) 
-		// throw "more pinsDown than remaining pins"
-
-	
 	var firstPinStanding = this.currentFrame.numberPinsKnockOver()
 	for (var i = 0; i < pinsDown; i++ ) {
 		this.currentFrame.pins[firstPinStanding + i].down()
 	}
-	
 	this.currentFrame.newRoll()
 	this.updatingPlayerScore(pinsDown)
 	this.assignBonus()
-	// if ( this.currentFrame.remainingRolls == 0 || this.isStrike() ) this.changeFrame(this.currentFrame)
+	// if ( this.currentFrame.remainingRolls == 0 || this.isStrike() ) this.changeFrame()
 }
 
 Game.prototype.isStrike = function() {
@@ -64,8 +60,7 @@ Game.prototype.initialFrame = function() {
 	this.currentFrame = this.frames[0]
 }
 
-Game.prototype.changeFrame = function(currentFrame) {
-	console.log(this.frameNumber())
+Game.prototype.changeFrame = function() {
 	this.currentFrame = this.frames[this.frameNumber()]
 }
 
@@ -74,11 +69,25 @@ Game.prototype.updatingPlayerScore = function(pinsDown) {
 }
 
 Game.prototype.assignBonus = function() {
-	if( this.isStrike() ) return this.bonus = [2,2]
+	if( this.isStrike() && consecutiveStrikes < 3) {
+		consecutiveStrikes += 1
+		return this.bonus = [2,2]
+	}
+	consecutiveStrikes = 0
 	if( this.isSpare() ) return this.bonus.push(2)
 	this.bonus.push(1)
 }
 
+Game.prototype.isFrameTen = function() {
+	return this.frameNumber() === 10
+}
+
+Game.prototype.isPerfectGame = function() {
+	return this.player.score === 300 && this.isFrameTen()
+}
+Game.prototype.isCutterGame = function() {
+	return this.player.score === 0 && this.isFrameTen()
+}
 Frame.prototype.placingPins = function() {
 	for(var i=0; i < 10; i++ ) { this.pins.push(new Pin) }	
 }
