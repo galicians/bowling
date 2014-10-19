@@ -1,8 +1,6 @@
 
 describe("To play a bowling game we need:", function() {
 	
-
-
 	describe("To set up the playing area", function() {
 
 		var game, 
@@ -16,7 +14,6 @@ describe("To play a bowling game we need:", function() {
 				player = new Player
 				frame = new Frame
 			})
-
 
 		it("game should be defined", function() {
 			expect(game).toBeDefined()
@@ -102,6 +99,11 @@ describe("To play a bowling game we need:", function() {
 			game.changeFrame()
 		}
 
+		function spare() {
+			game.rollTheBall(6)
+			game.rollTheBall(4)
+		}
+
 		it("it should start at the initial frame", function() {
 			expect(game.currentFrame).toEqual(game.frames[0])
 		})
@@ -166,8 +168,7 @@ describe("To play a bowling game we need:", function() {
 		})
 
 		it("should assign a bonus after a spare", function() {
-			game.rollTheBall(6)
-			game.rollTheBall(4)
+			spare()
 			expect(game.bonus).toEqual([2])
 		})
 
