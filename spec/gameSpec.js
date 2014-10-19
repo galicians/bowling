@@ -1,11 +1,7 @@
 
-//pending:
 // 	gutter game(0) vs perfect game(300 pints)
-// 	30 points as max / frame
 //exception pinsDown > 10
-//player name
 //10th frame
-//change the strike and spare to the frame
 
 
 describe("To play a bowling game we need:", function() {
@@ -72,6 +68,11 @@ describe("To play a bowling game we need:", function() {
 			expect(player.score).toBeDefined
 		})
 
+		it("the player should be able to accept a name", function() {
+			player.name = "Big Lebowski"
+			game.player = player
+			expect(game.player.name).toEqual("Big Lebowski")
+		})
 
 	})
 
@@ -124,13 +125,6 @@ describe("To play a bowling game we need:", function() {
 			expect(game.currentFrame.remainingRolls).toEqual(1)
 		})
 
-		it("should update the score of the player after each roll", function() {
-			game.player = player
-			expect(game.player.score).toEqual(0)
-			game.rollTheBall(7)
-			expect(game.player.score).toEqual(7)
-		})
-
 		it("should change the frame after a strike, even with a roll left", function() {
 			game.remainingRolls = 2
 			game.rollTheBall(10)
@@ -157,19 +151,46 @@ describe("To play a bowling game we need:", function() {
 		it("should not assign a bonus if there are pins left at the end of the frame", function() {
 			game.rollTheBall(5)
 			game.rollTheBall(3)
-			expect(game.bonus).toEqual([1,1])
+			expect(game.bonus).toEqual([1])
 		})
 
 		it("should assign a double bonus after a strike", function() {
 			game.rollTheBall(10)
-			expect(game.bonus).toEqual([1,2,2])
+			expect(game.bonus).toEqual([2,2])
 		})
 
 		it("should assign a bonus after a spare", function() {
+			game.rollTheBall(6)
+			game.rollTheBall(4)
+			expect(game.bonus).toEqual([2])
+		})
+
+		it("should update the score of the player after each roll", function() {
+			game.player = player
+			game.rollTheBall(7)
+			expect(game.player.score).toEqual(7)
+		})
+
+		it("should double the points after a strike", function() {
+			game.player = player
+			game.rollTheBall(10)
+			expect(game.player.score).toEqual(10)
+			game.changeFrame()
 			game.rollTheBall(5)
-			expect(game.bonus).toEqual([1])
+			expect(game.player.score).toEqual(20)
+		})
+
+		it("should double the points after a spare", function() {
+			game.player = player
 			game.rollTheBall(5)
-			expect(game.bonus).toEqual([1,2])
+			game.rollTheBall(5)
+			game.changeFrame()
+			game.rollTheBall(3)
+			expect(game.player.score).toEqual(16)
+		})
+
+		it("the maximun number of bonus in a frame is 3", function() {
+
 		})
 
 	})

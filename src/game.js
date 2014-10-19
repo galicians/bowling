@@ -1,8 +1,8 @@
 function Game() {
-	var initialFrame = 0
 	this.frames = []
 	this.fillFrames()
-	this.currentFrame = this.frames[initialFrame]
+	this.currentFrame
+	this.initialFrame()
 	this.player = new Player
 	this.bonus = [1]
 }
@@ -39,44 +39,44 @@ Game.prototype.frameNumber = function() {
 Game.prototype.rollTheBall = function(pinsDown) {
 	// if (pinsDown > this.currentFrame.numberRemainingPins()) 
 		// throw "more pinsDown than remaining pins"
+
+	
 	var firstPinStanding = this.currentFrame.numberPinsKnockOver()
 	for (var i = 0; i < pinsDown; i++ ) {
 		this.currentFrame.pins[firstPinStanding + i].down()
 	}
 	
 	this.currentFrame.newRoll()
-	this.assignBonus(pinsDown)
 	this.updatingPlayerScore(pinsDown)
-	// if (game.strike) return game.changeFrame()
-	// this.currentFrame.newRoll()
+	this.assignBonus()
+	// if ( this.currentFrame.remainingRolls == 0 || this.isStrike() ) this.changeFrame(this.currentFrame)
 }
 
 Game.prototype.isStrike = function() {
 	 return (this.currentFrame.remainingRolls === 1 && this.currentFrame.numberRemainingPins() === 0)
 }
 
-Game.prototype.strike = function() {
-	this.currentFrame = this.frames[initialFrame += 1]
-}
 Game.prototype.isSpare = function() {
 	return (this.currentFrame.remainingRolls === 0 && this.currentFrame.numberRemainingPins() === 0)
 }
 
-Game.prototype.changeFrame = function() {
-	this.currentFrame = this.frames[initialFrame += 1]
+Game.prototype.initialFrame = function() {
+	this.currentFrame = this.frames[0]
+}
+
+Game.prototype.changeFrame = function(currentFrame) {
+	console.log(this.frameNumber())
+	this.currentFrame = this.frames[this.frameNumber()]
 }
 
 Game.prototype.updatingPlayerScore = function(pinsDown) {
-	this.player.score += pinsDown 
-	// * bonus.pop()
-	// if(this.current.frame.numberReminingPins
-	// if( pinsDown === 10)
+	this.player.score += pinsDown * this.bonus.pop().valueOf()
 }
 
-Game.prototype.assignBonus = function(pinsDown) {
-	if( this.isStrike() ) return this.bonus.push(2,2)
+Game.prototype.assignBonus = function() {
+	if( this.isStrike() ) return this.bonus = [2,2]
 	if( this.isSpare() ) return this.bonus.push(2)
-	if( this.currentFrame.remainingRolls === 0 ) this.bonus.push(1)
+	this.bonus.push(1)
 }
 
 Frame.prototype.placingPins = function() {
@@ -84,11 +84,7 @@ Frame.prototype.placingPins = function() {
 }
 
 Frame.prototype.newRoll = function() {
-	console.log("before")
-	console.log(this.remainingRolls)
 	this.remainingRolls -= 1
-	console.log("after")
-	console.log(this.remainingRolls)
 }
 
 Frame.prototype.numberPinsKnockOver = function() {
